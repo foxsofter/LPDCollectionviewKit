@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'LPDCollectionViewKit_Example' do
+  pod 'LPDCollectionViewKit', :path => '../'
+
+  target 'LPDCollectionViewKit_Tests' do
+    inherit! :search_paths
+
+    pod 'Kiwi'
+  end
+end
