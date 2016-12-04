@@ -1,0 +1,6 @@
+framework module Pods_LPDCollectionViewKit_Example {
+  umbrella header "Pods-LPDCollectionViewKit_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}
