@@ -2,7 +2,9 @@ use_frameworks!
 
 target 'LPDCollectionViewKit_Example' do
   pod 'LPDCollectionViewKit', :path => '../'
-
+  pod 'LPDNetworkingKit'
+  pod 'LPDAdditionsKit'
+  pod 'Masonry'
   target 'LPDCollectionViewKit_Tests' do
     inherit! :search_paths
 

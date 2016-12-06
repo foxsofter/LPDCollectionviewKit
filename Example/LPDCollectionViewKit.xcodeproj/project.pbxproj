@@ -22,6 +22,11 @@
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
+		8E11DD591DF5575E003F60F6 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E11DD581DF5575E003F60F6 /* Launch Screen.storyboard */; };
+		8E11DD641DF670B8003F60F6 /* LPDPhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E11DD5D1DF670B8003F60F6 /* LPDPhotoModel.m */; };
+		8E11DD651DF670B8003F60F6 /* LPDCollectionPhotoCellViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E11DD601DF670B8003F60F6 /* LPDCollectionPhotoCellViewModel.m */; };
+		8E11DD661DF670B8003F60F6 /* LPDCollectionViewPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E11DD631DF670B8003F60F6 /* LPDCollectionViewPhotoCell.m */; };
+		8E11DD691DF67200003F60F6 /* UIImageView+LPDAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E11DD681DF67200003F60F6 /* UIImageView+LPDAddition.m */; };
 		C1F36D97E3C31709ECB91E4F /* Pods_LPDCollectionViewKit_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFE1454BEF33CCE5471603B6 /* Pods_LPDCollectionViewKit_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -36,7 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		418A65E76BEE1BA5D2F34162 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		418A65E76BEE1BA5D2F34162 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		525D1A0467F64754DC84D46F /* Pods-LPDCollectionViewKit_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LPDCollectionViewKit_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-LPDCollectionViewKit_Example/Pods-LPDCollectionViewKit_Example.release.xcconfig"; sourceTree = "<group>"; };
 		5F486AF8DBD062A63396F32E /* Pods-LPDCollectionViewKit_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LPDCollectionViewKit_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LPDCollectionViewKit_Tests/Pods-LPDCollectionViewKit_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* LPDCollectionViewKit_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LPDCollectionViewKit_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -59,10 +64,19 @@
 		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		8E11DD581DF5575E003F60F6 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		8E11DD5C1DF670B8003F60F6 /* LPDPhotoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPDPhotoModel.h; sourceTree = "<group>"; };
+		8E11DD5D1DF670B8003F60F6 /* LPDPhotoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LPDPhotoModel.m; sourceTree = "<group>"; };
+		8E11DD5F1DF670B8003F60F6 /* LPDCollectionPhotoCellViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPDCollectionPhotoCellViewModel.h; sourceTree = "<group>"; };
+		8E11DD601DF670B8003F60F6 /* LPDCollectionPhotoCellViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LPDCollectionPhotoCellViewModel.m; sourceTree = "<group>"; };
+		8E11DD621DF670B8003F60F6 /* LPDCollectionViewPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPDCollectionViewPhotoCell.h; sourceTree = "<group>"; };
+		8E11DD631DF670B8003F60F6 /* LPDCollectionViewPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LPDCollectionViewPhotoCell.m; sourceTree = "<group>"; };
+		8E11DD671DF67200003F60F6 /* UIImageView+LPDAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+LPDAddition.h"; sourceTree = "<group>"; };
+		8E11DD681DF67200003F60F6 /* UIImageView+LPDAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+LPDAddition.m"; sourceTree = "<group>"; };
 		A1CBE7787CA4B594EB326436 /* Pods-LPDCollectionViewKit_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LPDCollectionViewKit_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LPDCollectionViewKit_Tests/Pods-LPDCollectionViewKit_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		B4F0BFD2FAFFF4F06912FDE1 /* LPDCollectionViewKit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = LPDCollectionViewKit.podspec; path = ../LPDCollectionViewKit.podspec; sourceTree = "<group>"; };
+		B4F0BFD2FAFFF4F06912FDE1 /* LPDCollectionViewKit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LPDCollectionViewKit.podspec; path = ../LPDCollectionViewKit.podspec; sourceTree = "<group>"; };
 		BFE1454BEF33CCE5471603B6 /* Pods_LPDCollectionViewKit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LPDCollectionViewKit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D240B10C4613A92EC995A11D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		D240B10C4613A92EC995A11D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		E4A50F8709D881F6225A288C /* Pods-LPDCollectionViewKit_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LPDCollectionViewKit_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LPDCollectionViewKit_Example/Pods-LPDCollectionViewKit_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		EF30A07E5A43573A7B84F967 /* Pods_LPDCollectionViewKit_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LPDCollectionViewKit_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -141,12 +155,18 @@
 		6003F593195388D20070C39A /* Example for LPDCollectionViewKit */ = {
 			isa = PBXGroup;
 			children = (
+				8E11DD5B1DF670B8003F60F6 /* Models */,
+				8E11DD5E1DF670B8003F60F6 /* ViewModels */,
+				8E11DD611DF670B8003F60F6 /* Views */,
 				6003F59C195388D20070C39A /* LPDAppDelegate.h */,
 				6003F59D195388D20070C39A /* LPDAppDelegate.m */,
-				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
 				6003F5A5195388D20070C39A /* LPDViewController.h */,
 				6003F5A6195388D20070C39A /* LPDViewController.m */,
+				8E11DD671DF67200003F60F6 /* UIImageView+LPDAddition.h */,
+				8E11DD681DF67200003F60F6 /* UIImageView+LPDAddition.m */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
+				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
+				8E11DD581DF5575E003F60F6 /* Launch Screen.storyboard */,
 				6003F594195388D20070C39A /* Supporting Files */,
 			);
 			name = "Example for LPDCollectionViewKit";
@@ -191,6 +211,33 @@
 				D240B10C4613A92EC995A11D /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		8E11DD5B1DF670B8003F60F6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8E11DD5C1DF670B8003F60F6 /* LPDPhotoModel.h */,
+				8E11DD5D1DF670B8003F60F6 /* LPDPhotoModel.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		8E11DD5E1DF670B8003F60F6 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				8E11DD5F1DF670B8003F60F6 /* LPDCollectionPhotoCellViewModel.h */,
+				8E11DD601DF670B8003F60F6 /* LPDCollectionPhotoCellViewModel.m */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		8E11DD611DF670B8003F60F6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8E11DD621DF670B8003F60F6 /* LPDCollectionViewPhotoCell.h */,
+				8E11DD631DF670B8003F60F6 /* LPDCollectionViewPhotoCell.m */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -247,6 +294,9 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = foxsofter;
 				TargetAttributes = {
+					6003F589195388D20070C39A = {
+						DevelopmentTeam = K5992V3NHR;
+					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
 					};
@@ -278,6 +328,7 @@
 			files = (
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
+				8E11DD591DF5575E003F60F6 /* Launch Screen.storyboard in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -391,6 +442,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				6003F59E195388D20070C39A /* LPDAppDelegate.m in Sources */,
+				8E11DD691DF67200003F60F6 /* UIImageView+LPDAddition.m in Sources */,
+				8E11DD651DF670B8003F60F6 /* LPDCollectionPhotoCellViewModel.m in Sources */,
+				8E11DD661DF670B8003F60F6 /* LPDCollectionViewPhotoCell.m in Sources */,
+				8E11DD641DF670B8003F60F6 /* LPDPhotoModel.m in Sources */,
 				6003F5A7195388D20070C39A /* LPDViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 			);
@@ -512,10 +567,11 @@
 			baseConfigurationReference = E4A50F8709D881F6225A288C /* Pods-LPDCollectionViewKit_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = K5992V3NHR;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LPDCollectionViewKit/LPDCollectionViewKit-Prefix.pch";
 				INFOPLIST_FILE = "LPDCollectionViewKit/LPDCollectionViewKit-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -528,10 +584,11 @@
 			baseConfigurationReference = 525D1A0467F64754DC84D46F /* Pods-LPDCollectionViewKit_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = K5992V3NHR;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LPDCollectionViewKit/LPDCollectionViewKit-Prefix.pch";
 				INFOPLIST_FILE = "LPDCollectionViewKit/LPDCollectionViewKit-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";

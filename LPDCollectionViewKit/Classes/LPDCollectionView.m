@@ -33,11 +33,11 @@
 
   @weakify(self);
   [[[self rac_signalForSelector:@selector(didMoveToSuperview)] takeUntil:[self rac_willDeallocSignal]] subscribeNext:^(id x) {
-      @strongify(self);
+    @strongify(self);
     
-      LPDCollectionViewModel *collectionViewModel = self.viewModel;
-      super.delegate = collectionViewModel.delegate;
-      super.dataSource = collectionViewModel.dataSource;
+    LPDCollectionViewModel *collectionViewModel = self.viewModel;
+    super.delegate = collectionViewModel.delegate;
+    super.dataSource = collectionViewModel.dataSource;
 
     [[[collectionViewModel.reloadDataSignal takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
       deliverOnMainThread] subscribeNext:^(id x) {
@@ -51,49 +51,51 @@
           [self insertSections:indexSet];
         }];
 
-      [[collectionViewModel.deleteSectionsSignal takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
-        subscribeNext:^(NSIndexSet *indexSet) {
+      [[[collectionViewModel.deleteSectionsSignal takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
+        deliverOnMainThread] subscribeNext:^(NSIndexSet *indexSet) {
           @strongify(self);
           [self deleteSections:indexSet];
         }];
 
-      [[collectionViewModel.replaceSectionsSignal takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
-        subscribeNext:^(NSIndexSet *indexSet) {
+      [[[collectionViewModel.replaceSectionsSignal takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
+        deliverOnMainThread] subscribeNext:^(NSIndexSet *indexSet) {
           @strongify(self);
           [self reloadSections:indexSet];
         }];
 
-      [[collectionViewModel.reloadSectionsSignal takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
-        subscribeNext:^(NSIndexSet *indexSet) {
+      [[[collectionViewModel.reloadSectionsSignal takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
+        deliverOnMainThread] subscribeNext:^(NSIndexSet *indexSet) {
           @strongify(self);
           [self reloadSections:indexSet];
         }];
 
-      [[collectionViewModel.insertItemsAtIndexPathsSignal
-        takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
-        subscribeNext:^(NSArray<NSIndexPath *> *indexPaths) {
+      [[[collectionViewModel.insertItemsAtIndexPathsSignal takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
+        deliverOnMainThread] subscribeNext:^(NSArray<NSIndexPath *> *indexPaths) {
           @strongify(self);
+//          [self reloadData];
+        NSLog(@"1111");
           [self insertItemsAtIndexPaths:indexPaths];
-        }];
+        NSLog(@"2222");
+      }];
 
-      [[collectionViewModel.deleteItemsAtIndexPathsSignal
+      [[[collectionViewModel.deleteItemsAtIndexPathsSignal
         takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
-        subscribeNext:^(NSArray<NSIndexPath *> *indexPaths) {
+        deliverOnMainThread] subscribeNext:^(NSArray<NSIndexPath *> *indexPaths) {
           @strongify(self);
           [self deleteItemsAtIndexPaths:indexPaths];
         }];
 
-      [[collectionViewModel.replaceItemsAtIndexPathsSignal
-        takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]] subscribeNext:^(RACTuple *tuple) {
+      [[[collectionViewModel.replaceItemsAtIndexPathsSignal
+        takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]] deliverOnMainThread] subscribeNext:^(RACTuple *tuple) {
         @strongify(self);
         //        [self deleteItemsAtIndexPaths:tuple.first];
         //        [self insertItemsAtIndexPaths:tuple.second];
         [self reloadData];
       }];
 
-      [[collectionViewModel.reloadItemsAtIndexPathsSignal
+      [[[collectionViewModel.reloadItemsAtIndexPathsSignal
         takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
-        subscribeNext:^(NSArray<NSIndexPath *> *indexPaths) {
+        deliverOnMainThread] subscribeNext:^(NSArray<NSIndexPath *> *indexPaths) {
           @strongify(self);
           [self reloadItemsAtIndexPaths:indexPaths];
         }];

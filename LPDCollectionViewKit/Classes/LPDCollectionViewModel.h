@@ -16,7 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface LPDCollectionViewModel : NSObject <LPDCollectionViewModelProtocol>
 
 + (instancetype) new NS_UNAVAILABLE;
-- (instancetype)init NS_UNAVAILABLE;
 
 @end
 

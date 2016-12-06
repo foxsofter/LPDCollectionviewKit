@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'LPDCollectionViewKit'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of LPDCollectionViewKit.'
+  s.summary          = 'LPDCollectionViewKit, data driven collection view.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -31,7 +31,8 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'LPDCollectionViewKit/Classes/**/*'
-  
+  s.private_header_files = 'LPDCollectionViewKit/Classes/LPDCollectionSectionViewModel+Private.h', 'LPDCollectionViewKit/Classes/LPDCollectionViewModel+Private.h'
+
   # s.resource_bundles = {
   #   'LPDCollectionViewKit' => ['LPDCollectionViewKit/Assets/*.png']
   # }
