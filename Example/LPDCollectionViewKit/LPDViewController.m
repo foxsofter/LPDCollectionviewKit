@@ -32,7 +32,7 @@
   collectionViewFlowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
   collectionViewFlowLayout.itemSize = CGSizeMake((UIScreen.width - 30) / 2, (UIScreen.width - 30) / 2);
   collectionViewFlowLayout.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
-  collectionViewFlowLayout.headerReferenceSize = CGSizeMake(self.view.bounds.size.width, 1);
+  collectionViewFlowLayout.headerReferenceSize = CGSizeMake(self.view.bounds.size.width, 30);
   collectionViewFlowLayout.footerReferenceSize = CGSizeMake(self.view.bounds.size.width, 1);
   
   self.collectionView =
@@ -66,6 +66,9 @@
   UIBarButtonItem *replaceCellsBarButtonItem =
   [[UIBarButtonItem alloc] initWithTitle:@"rpcs" style:UIBarButtonItemStylePlain target:self action:@selector(replaceCells)];
   
+  UIBarButtonItem *insertSectionBarButtonItem =
+  [[UIBarButtonItem alloc] initWithTitle:@"is" style:UIBarButtonItemStylePlain target:self action:@selector(insertSection)];
+
   self.navigationController.toolbarHidden = NO;
   [self setToolbarItems:@[addCellBarButtonItem,
                           addCellsBarButtonItem,
@@ -73,7 +76,8 @@
                           insertCellsBarButtonItem,
                           removeCellBarButtonItem,
                           removeCellsBarButtonItem,
-                          replaceCellsBarButtonItem,]
+                          replaceCellsBarButtonItem,
+                          insertSectionBarButtonItem,]
                animated:YES];
 
   @weakify(self);
@@ -84,8 +88,7 @@
   [[_apiClient rac_GET:kLPDApiEndpointPhotos parameters:nil] subscribeNext:^(RACTuple *tuple){
     @strongify(self);
     NSMutableArray *datas = [NSMutableArray arrayWithArray:tuple.first];
-    [datas removeObjectsInRange:NSMakeRange(200, datas.count - 200)];
-    [self reloadCollection:datas];
+    [self reloadCollection:[datas subarrayWithRange:NSMakeRange(0, 3)]];
   } error:^(NSError *error) {
     
   } completed:^{
@@ -193,6 +196,11 @@
 //  [self.tableViewModel replaceCellViewModels:@[ cellViewModel1, cellViewModel2 ] fromIndex:0 withRowAnimation:UITableViewRowAnimationLeft];
 }
 
-
+- (void)insertSection {
+  LPDCollectionSectionWithHeadTitleViewModel *sectionViewModel = [LPDCollectionSectionWithHeadTitleViewModel section];
+  
+  sectionViewModel.headerTitle = @"逗你玩";
+  [self.collectionViewModel addSectionViewModel:sectionViewModel];
+}
 
 @end

@@ -68,14 +68,6 @@
 
 @end
 
-#define EnsureOneSectionExists                                                             \
-  if (self.sections.count < 1) {                                                           \
-    LPDCollectionSectionViewModel *section = [LPDCollectionSectionViewModel section];      \
-    section.mutableItems = [NSMutableArray array];                                         \
-    [self.sections addObject:section];                                                     \
-    [self.reloadDataSubject sendNext:nil];                                                 \
-  }
-
 static NSString *const kDefaultHeaderReuseIdentifier = @"kDefaultHeaderReuseIdentifier";
 static NSString *const kDefaultFooterReuseIdentifier = @"kDefaultFooterReuseIdentifier";
 
@@ -185,110 +177,107 @@ static NSString *const kDefaultFooterReuseIdentifier = @"kDefaultFooterReuseIden
 }
 
 - (void)addCellViewModel:(__kindof id<LPDCollectionItemViewModelProtocol>)cellViewModel {
-  EnsureOneSectionExists;
-
-  [self addCellViewModel:cellViewModel toSection:self.sections.count - 1];
+  NSUInteger sectionIndex = self.sections.count > 0 ? self.sections.count - 1 : 0;
+  [self addCellViewModel:cellViewModel toSection:sectionIndex];
 }
 
 - (void)addCellViewModel:(__kindof id<LPDCollectionItemViewModelProtocol>)cellViewModel
                toSection:(NSUInteger)sectionIndex {
-  EnsureOneSectionExists;
-  
-  LPDCollectionSectionViewModel *section = self.sections[sectionIndex];
-  [self insertCellViewModel:cellViewModel
-                    atIndex:section.mutableItems.count
+  NSUInteger index = 0;
+  if (self.sections.count > 0) {
+    LPDCollectionSectionViewModel *section = self.sections[sectionIndex];
+    index = section.mutableItems.count;
+  }
+  [self insertCellViewModels:@[ cellViewModel ]
+                    atIndex:index
                   inSection:sectionIndex];
 }
 
 - (void)addCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol>> *)cellViewModels {
-  EnsureOneSectionExists;
-
-  [self addCellViewModels:cellViewModels toSection:self.sections.count - 1];
+  NSUInteger sectionIndex = self.sections.count > 0 ? self.sections.count - 1 : 0;
+  [self addCellViewModels:cellViewModels toSection:sectionIndex];
 }
 
 - (void)addCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol>> *)cellViewModels
                 toSection:(NSUInteger)sectionIndex {
-  EnsureOneSectionExists;
+  NSUInteger index = 0;
+  if (self.sections.count > 0) {
+    LPDCollectionSectionViewModel *section = self.sections[sectionIndex];
+    index = section.mutableItems.count;
+  }
 
-  LPDCollectionSectionViewModel *section = self.sections[sectionIndex];
   [self insertCellViewModels:cellViewModels
-                     atIndex:section.mutableItems.count
+                     atIndex:index
                    inSection:sectionIndex];
 }
 
 - (void)insertCellViewModel:(__kindof id<LPDCollectionItemViewModelProtocol>)cellViewModel atIndex:(NSUInteger)index {
-  EnsureOneSectionExists;
-
-  [self insertCellViewModel:cellViewModel atIndex:index inSection:self.sections.count - 1];
+  NSUInteger sectionIndex = self.sections.count > 0 ? self.sections.count - 1 : 0;
+  [self insertCellViewModels:@[ cellViewModel] atIndex:index inSection:sectionIndex];
 }
 
 - (void)insertCellViewModel:(__kindof id<LPDCollectionItemViewModelProtocol>)cellViewModel
                     atIndex:(NSUInteger)index
                   inSection:(NSUInteger)sectionIndex {
-  EnsureOneSectionExists;
-
-  if (sectionIndex < self.sections.count) {
-
-    for (LPDCollectionSectionViewModel *section in self.sections) {
-      for (id<LPDCollectionItemViewModelProtocol> currentCellViewModel in section.mutableItems) {
-        if (currentCellViewModel == cellViewModel) {
-          return;
-        }
-      }
-    }
-
-    LPDCollectionSectionViewModel *section = self.sections[sectionIndex];
-    if (index <= section.mutableItems.count) {
-      [section.mutableItems insertObject:cellViewModel atIndex:index];
-
-      // send insertItemsAtIndexPathsSignal
-      NSMutableArray<NSIndexPath *> *indexPaths = [NSMutableArray arrayWithCapacity:1];
-      [indexPaths addObject:[NSIndexPath indexPathForItem:index inSection:sectionIndex]];
-      [self.insertItemsAtIndexPathsSubject sendNext:indexPaths];
-    }
-  }
+  [self insertCellViewModels:@[ cellViewModel ]
+                     atIndex:index
+                   inSection:sectionIndex];
 }
 
 - (void)insertCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol>> *)cellViewModels
                      atIndex:(NSUInteger)index {
-  EnsureOneSectionExists;
-
-  [self insertCellViewModels:cellViewModels atIndex:index inSection:self.sections.count - 1];
+  NSUInteger sectionIndex = self.sections.count > 0 ? self.sections.count - 1 : 0;
+  [self insertCellViewModels:cellViewModels atIndex:index inSection:sectionIndex];
 }
 
 - (void)insertCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol>> *)cellViewModels
                      atIndex:(NSUInteger)index
                    inSection:(NSUInteger)sectionIndex {
-  EnsureOneSectionExists;
+  if (sectionIndex >= self.sections.count && self.sections.count > 1) {
+    return;
+  }
+  
+  BOOL needInsertSection = NO;
+  LPDCollectionSectionViewModel *section = nil;
+  if (self.sections.count < 1) {
+    section = [LPDCollectionSectionViewModel section];
+    section.mutableItems = [NSMutableArray array];
+    [self.sections addObject:section];
+    needInsertSection = YES;
+  } else {
+    section = self.sections[sectionIndex];
+  }
+  
+  NSMutableSet *testRepeatSet = [[NSMutableSet alloc] initWithArray:cellViewModels];
+  if (testRepeatSet.count != cellViewModels.count) {
+    return;
+  }
 
-  if (sectionIndex < self.sections.count) {
-
-    NSMutableSet *testRepeatSet = [[NSMutableSet alloc] initWithArray:cellViewModels];
-    if (testRepeatSet.count != cellViewModels.count) {
-      return;
-    }
-
-    for (LPDCollectionSectionViewModel *section in self.sections) {
-      for (id<LPDCollectionItemViewModelProtocol> currentCellViewModel in section.mutableItems) {
-        if ([cellViewModels containsObject:currentCellViewModel]) {
-          return;
-        }
+  for (LPDCollectionSectionViewModel *section in self.sections) {
+    for (id<LPDCollectionItemViewModelProtocol> currentCellViewModel in section.mutableItems) {
+      if ([cellViewModels containsObject:currentCellViewModel]) {
+        return;
       }
     }
+  }
 
-    LPDCollectionSectionViewModel *section = self.sections[sectionIndex];
-    if (index <= section.mutableItems.count) {
-      NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(index, cellViewModels.count)];
-      [section.mutableItems insertObjects:cellViewModels atIndexes:indexSet];
+  if (index <= section.mutableItems.count) {
+    NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(index, cellViewModels.count)];
+    [section.mutableItems insertObjects:cellViewModels atIndexes:indexSet];
 
-      // send insertItemsAtIndexPathsSignal
-      NSUInteger startIndex = index;
-      NSMutableArray<NSIndexPath *> *indexPaths = [NSMutableArray arrayWithCapacity:cellViewModels.count];
-      for (NSInteger i = startIndex; i < cellViewModels.count + startIndex; i++) {
-        [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:sectionIndex]];
-      }
-      [self.insertItemsAtIndexPathsSubject sendNext:indexPaths];
+    // send insertItemsAtIndexPathsSignal
+    NSUInteger startIndex = index;
+    NSMutableArray<NSIndexPath *> *indexPaths = [NSMutableArray arrayWithCapacity:cellViewModels.count];
+    for (NSInteger i = startIndex; i < cellViewModels.count + startIndex; i++) {
+      [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:sectionIndex]];
     }
+    RACTuple *tuple = nil;
+    if (needInsertSection) {
+      tuple = RACTuplePack(indexPaths, [NSIndexSet indexSetWithIndex:sectionIndex]);
+    } else {
+      tuple = RACTuplePack(indexPaths);
+    }
+    [self.insertItemsAtIndexPathsSubject sendNext:tuple];
   }
 }
 
@@ -353,16 +342,20 @@ static NSString *const kDefaultFooterReuseIdentifier = @"kDefaultFooterReuseIden
 
 - (void)replaceCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol>> *)cellViewModels
                     fromIndex:(NSUInteger)index {
-  EnsureOneSectionExists;
-
-  [self replaceCellViewModels:cellViewModels fromIndex:index inSection:self.sections.count - 1];
+  NSUInteger sectionIndex = self.sections.count > 0 ? self.sections.count - 1 : 0;
+  [self replaceCellViewModels:cellViewModels fromIndex:index inSection:sectionIndex];
 }
 
 - (void)replaceCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol>> *)cellViewModels
                     fromIndex:(NSUInteger)index
                     inSection:(NSUInteger)sectionIndex {
-  EnsureOneSectionExists;
-
+  BOOL needInsertSection = NO;
+  if (self.sections.count < 1) {
+    LPDCollectionSectionViewModel *section = [LPDCollectionSectionViewModel section];
+    section.mutableItems = [NSMutableArray array];
+    [self.sections addObject:section];
+    needInsertSection = YES;
+  }
   if (sectionIndex >= self.sections.count) {
     return;
   }
@@ -388,17 +381,23 @@ static NSString *const kDefaultFooterReuseIdentifier = @"kDefaultFooterReuseIden
   [section.mutableItems removeObjectsInRange:oldRange];
   NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(index, cellViewModels.count)];
   [section.mutableItems insertObjects:cellViewModels atIndexes:indexSet];
-  NSMutableArray<NSIndexPath *> *oldIndexPath = [NSMutableArray arrayWithCapacity:1];
+  NSMutableArray<NSIndexPath *> *oldIndexPaths = [NSMutableArray arrayWithCapacity:1];
   for (NSInteger i = oldRange.location; i < oldRange.location + oldRange.length; i++) {
-    [oldIndexPath addObject:[NSIndexPath indexPathForRow:i inSection:sectionIndex]];
+    [oldIndexPaths addObject:[NSIndexPath indexPathForRow:i inSection:sectionIndex]];
   }
-  NSMutableArray<NSIndexPath *> *newIndexPath = [NSMutableArray arrayWithCapacity:1];
+  NSMutableArray<NSIndexPath *> *newIndexPaths = [NSMutableArray arrayWithCapacity:1];
   for (NSInteger i = index; i < index + cellViewModels.count; i++) {
-    [newIndexPath addObject:[NSIndexPath indexPathForRow:i inSection:sectionIndex]];
+    [newIndexPaths addObject:[NSIndexPath indexPathForRow:i inSection:sectionIndex]];
   }
 
   // send replaceItemsAtIndexPathsSignal
-  [self.replaceItemsAtIndexPathsSubject sendNext:RACTuplePack(oldIndexPath, newIndexPath)];
+  RACTuple *tuple = nil;
+  if (needInsertSection) {
+    tuple = RACTuplePack(oldIndexPaths, newIndexPaths, [NSIndexSet indexSetWithIndex:sectionIndex]);
+  } else {
+    tuple = RACTuplePack(oldIndexPaths, newIndexPaths);
+  }
+  [self.replaceItemsAtIndexPathsSubject sendNext:tuple];
 }
 
 - (void)addSectionViewModel:(id<LPDCollectionSectionViewModelProtocol>)sectionViewModel {
@@ -407,31 +406,7 @@ static NSString *const kDefaultFooterReuseIdentifier = @"kDefaultFooterReuseIden
 
 - (void)addSectionViewModel:(id<LPDCollectionSectionViewModelProtocol>)sectionViewModel
          withCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol>> *)cellViewModels {
-  if ([self.sections containsObject:sectionViewModel]) {
-    return;
-  }
-
-  NSMutableSet *testRepeatSet = [[NSMutableSet alloc] initWithArray:cellViewModels];
-  if (testRepeatSet.count != cellViewModels.count) {
-    return;
-  }
-
-  for (LPDCollectionSectionViewModel *section in self.sections) {
-    for (id<LPDCollectionItemViewModelProtocol> currentCellViewModel in section.mutableItems) {
-      if ([cellViewModels containsObject:currentCellViewModel]) {
-        return;
-      }
-    }
-  }
-
-  LPDCollectionSectionViewModel *section = sectionViewModel;
-  section.mutableItems = cellViewModels && cellViewModels.count > 0 ? [NSMutableArray arrayWithArray:cellViewModels]
-                                                                    : [NSMutableArray array];
-  [self.sections addObject:section];
-
-  // send insertSectionsSignal
-  NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndex:self.sections.count - 1];
-  [self.insertSectionsSubject sendNext:indexSet];
+  [self insertSectionViewModel:sectionViewModel withCellViewModels:cellViewModels atIndex:self.sections.count];
 }
 
 - (void)insertSectionViewModel:(id<LPDCollectionSectionViewModelProtocol>)sectionViewModel atIndex:(NSUInteger)index {
@@ -503,15 +478,19 @@ static NSString *const kDefaultFooterReuseIdentifier = @"kDefaultFooterReuseIden
 }
 
 - (void)replaceSectionWithCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol>> *)cellViewModels {
-  EnsureOneSectionExists;
-
-  [self replaceSectionWithCellViewModels:cellViewModels atSection:self.sections.count - 1];
+  NSUInteger sectionIndex = self.sections.count > 0 ? self.sections.count - 1 : 0;
+  [self replaceSectionWithCellViewModels:cellViewModels atSection:sectionIndex];
 }
 
 - (void)replaceSectionWithCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol>> *)cellViewModels
                                atSection:(NSUInteger)sectionIndex {
-  EnsureOneSectionExists;
-
+  BOOL needInsertSection = NO;
+  if (self.sections.count < 1) {
+    LPDCollectionSectionViewModel *section = [LPDCollectionSectionViewModel section];
+    section.mutableItems = [NSMutableArray array];
+    [self.sections addObject:section];
+    needInsertSection = YES;
+  }
   if (sectionIndex < self.sections.count) {
 
     NSMutableSet *testRepeatSet = [[NSMutableSet alloc] initWithArray:cellViewModels];
@@ -533,7 +512,11 @@ static NSString *const kDefaultFooterReuseIdentifier = @"kDefaultFooterReuseIden
 
     // send reloadSectionsSignal
     NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndex:sectionIndex];
-    [self.replaceSectionsSubject sendNext:indexSet];
+    if (needInsertSection) {
+      [self.insertSectionsSubject sendNext:indexSet];
+    } else {
+      [self.replaceSectionsSubject sendNext:indexSet];
+    }
   }
 }
 
@@ -763,6 +746,7 @@ static NSString *const kDefaultFooterReuseIdentifier = @"kDefaultFooterReuseIden
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 //  NSParameterAssert((NSUInteger)section < self.viewModel.sections.count || 0 == self.viewModel.sections.count);
+  NSLog(@"numberOfItemsInSection：%d", [[self.viewModel.sections objectAtIndex:section] mutableItems].count);
   if ((NSUInteger)section < self.viewModel.sections.count) {
     return [[self.viewModel.sections objectAtIndex:section] mutableItems].count;
   } else {

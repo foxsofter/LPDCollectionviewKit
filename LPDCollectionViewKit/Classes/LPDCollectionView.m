@@ -9,6 +9,7 @@
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import "LPDCollectionView.h"
 #import "LPDCollectionViewModel+Private.h"
+#import "LPDCollectionSectionViewModel+Private.h"
 
 @interface LPDCollectionView ()
 
@@ -60,7 +61,10 @@
       [[[collectionViewModel.replaceSectionsSignal takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
         deliverOnMainThread] subscribeNext:^(NSIndexSet *indexSet) {
           @strongify(self);
-          [self reloadSections:indexSet];
+        [self performBatchUpdates:^{
+          [self deleteItemsAtIndexPaths:indexSet];
+          [self insertItemsAtIndexPaths:indexSet];
+        } completion:nil];
         }];
 
       [[[collectionViewModel.reloadSectionsSignal takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
@@ -70,12 +74,16 @@
         }];
 
       [[[collectionViewModel.insertItemsAtIndexPathsSignal takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
-        deliverOnMainThread] subscribeNext:^(NSArray<NSIndexPath *> *indexPaths) {
-          @strongify(self);
-//          [self reloadData];
-        NSLog(@"1111");
-          [self insertItemsAtIndexPaths:indexPaths];
-        NSLog(@"2222");
+        deliverOnMainThread] subscribeNext:^(RACTuple *tuple) {
+        @strongify(self);
+        if (tuple.second) {
+          [self performBatchUpdates:^{
+            [self insertSections:tuple.second];
+            [self insertItemsAtIndexPaths:tuple.first];
+          } completion:nil];
+        } else {
+          [self insertItemsAtIndexPaths:tuple.first];
+        }
       }];
 
       [[[collectionViewModel.deleteItemsAtIndexPathsSignal
@@ -88,9 +96,15 @@
       [[[collectionViewModel.replaceItemsAtIndexPathsSignal
         takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]] deliverOnMainThread] subscribeNext:^(RACTuple *tuple) {
         @strongify(self);
-        //        [self deleteItemsAtIndexPaths:tuple.first];
-        //        [self insertItemsAtIndexPaths:tuple.second];
-        [self reloadData];
+        [self performBatchUpdates:^{
+          if (tuple.third) {
+            [self insertSections:tuple.third];
+            [self insertItemsAtIndexPaths:tuple.second];
+          } else {
+            [self deleteItemsAtIndexPaths:tuple.first];
+            [self insertItemsAtIndexPaths:tuple.second];
+          }
+        } completion:nil];
       }];
 
       [[[collectionViewModel.reloadItemsAtIndexPathsSignal
