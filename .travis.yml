@@ -11,7 +11,7 @@ language: objective-c
 # - pod install --project-directory=Example
 before_install:
 - brew update
-- brew install xctool
+# - brew install xctool
 script:
 - xctool -workspace Example/LPDCollectionViewKit.xcworkspace -scheme LPDCollectionViewKit-Example -sdk iphonesimulator
 - pod lib lint --allow-warnings
