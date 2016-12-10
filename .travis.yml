@@ -10,8 +10,8 @@ language: objective-c
 # - gem install cocoapods # Since Travis is not always on latest version
 # - pod install --project-directory=Example
 before_install:
-    - brew update
-    - brew install xctool
+- brew update
+- brew install xctool
 script:
-- set -o pipefail && xctool -workspace Example/LPDCollectionViewKit.xcworkspace -scheme LPDCollectionViewKit-Example -sdk iphonesimulator9.3 ONLY_ACTIVE_ARCH=NO | xcpretty
+- xctool -workspace Example/LPDCollectionViewKit.xcworkspace -scheme LPDCollectionViewKit-Example -sdk iphonesimulator
 - pod lib lint --allow-warnings
