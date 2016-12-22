@@ -6,11 +6,11 @@
 //  Copyright © 2016年 eleme. All rights reserved.
 //
 
-#import <LPDAdditionsKit/LPDAdditionsKit.h>
-#import "LPDPhotoModel.h"
 #import "LPDCollectionPhotoCellViewModel.h"
 #import "LPDCollectionViewPhotoCell.h"
+#import "LPDPhotoModel.h"
 #import "UIImageView+LPDAddition.h"
+#import <LPDAdditionsKit/LPDAdditionsKit.h>
 
 @implementation LPDCollectionViewPhotoCell
 
