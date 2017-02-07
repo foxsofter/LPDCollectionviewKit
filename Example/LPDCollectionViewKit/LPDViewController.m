@@ -185,15 +185,21 @@
 }
 
 - (void)replaceCells {
-//  LPDTableValue2CellViewModel *cellViewModel1 =
-//  [[LPDTableValue2CellViewModel alloc] initWithViewModel:self.tableViewModel];
-//  cellViewModel1.text = @"芬兰无法";
-//  cellViewModel1.detail = @"蜂王浆发了";
-//  LPDTableValue2CellViewModel *cellViewModel2 =
-//  [[LPDTableValue2CellViewModel alloc] initWithViewModel:self.tableViewModel];
-//  cellViewModel2.text = @"分为两份绝望";
-//  cellViewModel2.detail = @"分为来访将为浪费金额未来房价未来房价来我房间来我房间额外福利晚饭";
-//  [self.tableViewModel replaceCellViewModels:@[ cellViewModel1, cellViewModel2 ] fromIndex:0 withRowAnimation:UITableViewRowAnimationLeft];
+  NSMutableArray *cellViewModels = [NSMutableArray array];
+  for (NSInteger i = 0; i < 3; i++) {
+    LPDPhotoModel *model = [[LPDPhotoModel alloc]init];
+    model.albumId = 111111;
+    model.identifier = 1003131;
+    model.title = @"officia porro iure quia iusto qui ipsa ut modi";
+    model.thumbnailUrl = @"http://placehold.it/150/1941e9";
+    model.url = @"http://placehold.it/600/24f355";
+    
+    LPDCollectionPhotoCellViewModel *cellViewModel =
+    [[LPDCollectionPhotoCellViewModel alloc] initWithViewModel:self.collectionViewModel];
+    cellViewModel.model = model;
+    [cellViewModels addObject:cellViewModel];
+  }
+  [self.collectionViewModel replaceCellViewModels:cellViewModels fromIndex:1];
 }
 
 - (void)insertSection {

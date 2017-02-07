@@ -122,7 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				60FF7A9C1954A5C5007DD14C /* Podspec Metadata */,
-				6003F593195388D20070C39A /* Example for LPDCollectionViewKit */,
+				6003F593195388D20070C39A /* Example */,
 				6003F5B5195388D20070C39A /* Tests */,
 				6003F58C195388D20070C39A /* Frameworks */,
 				6003F58B195388D20070C39A /* Products */,
@@ -152,7 +152,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		6003F593195388D20070C39A /* Example for LPDCollectionViewKit */ = {
+		6003F593195388D20070C39A /* Example */ = {
 			isa = PBXGroup;
 			children = (
 				8E11DD5B1DF670B8003F60F6 /* Models */,
@@ -169,7 +169,7 @@
 				8E11DD581DF5575E003F60F6 /* Launch Screen.storyboard */,
 				6003F594195388D20070C39A /* Supporting Files */,
 			);
-			name = "Example for LPDCollectionViewKit";
+			name = Example;
 			path = LPDCollectionViewKit;
 			sourceTree = "<group>";
 		};
