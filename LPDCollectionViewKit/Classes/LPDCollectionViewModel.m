@@ -794,8 +794,9 @@ static NSString *const kDefaultFooterReuseIdentifier = @"kDefaultFooterReuseIden
 
 - (nullable UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
   if ([self.viewModel.scrollViewDelegate respondsToSelector:@selector(viewForZoomingInScrollView:)]) {
-    [self.viewModel.scrollViewDelegate viewForZoomingInScrollView:scrollView];
+    return [self.viewModel.scrollViewDelegate viewForZoomingInScrollView:scrollView];
   }
+  return nil;
 }
 
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(nullable UIView *)view {
@@ -812,8 +813,9 @@ static NSString *const kDefaultFooterReuseIdentifier = @"kDefaultFooterReuseIden
 
 - (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {
   if ([self.viewModel.scrollViewDelegate respondsToSelector:@selector(scrollViewShouldScrollToTop:)]) {
-    [self.viewModel.scrollViewDelegate scrollViewShouldScrollToTop:scrollView];
+    return [self.viewModel.scrollViewDelegate scrollViewShouldScrollToTop:scrollView];
   }
+  return YES;
 }
 
 - (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {
