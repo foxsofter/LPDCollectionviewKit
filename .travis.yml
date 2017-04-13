@@ -9,5 +9,5 @@ before_install:
 - brew update
 # - brew install xctool
 script:
-- xctool -workspace Example/LPDCollectionViewKit.xcworkspace -scheme LPDCollectionViewKit-Example -sdk iphonesimulator
+- xcodebuild -workspace Example/LPDCollectionViewKit.xcworkspace -scheme LPDCollectionViewKit-Example -sdk iphonesimulator
 - pod lib lint --allow-warnings
