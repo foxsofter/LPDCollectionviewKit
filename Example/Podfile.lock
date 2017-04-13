@@ -18,12 +18,12 @@ PODS:
   - LPDAdditionsKit (0.1.2)
   - LPDCollectionViewKit (0.1.8):
     - ReactiveObjC
-  - LPDNetworkingKit (0.2.3):
+  - LPDNetworkingKit (0.2.4):
     - AFNetworking
     - ReactiveObjC
     - YYModel
   - Masonry (1.0.2)
-  - ReactiveObjC (2.1.2)
+  - ReactiveObjC (3.0.0)
   - YYModel (1.0.4)
 
 DEPENDENCIES:
@@ -42,9 +42,9 @@ SPEC CHECKSUMS:
   Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
   LPDAdditionsKit: 68234d5791daf8d4272ccd4c06eaf22ab09b2809
   LPDCollectionViewKit: 3dd9cef6c6066e2017d07a6985d9ee6f948d1f96
-  LPDNetworkingKit: fdf98eb195924666be2ac5a60a7d83e832ecb23f
+  LPDNetworkingKit: afdec5c9ed7f410e5b3b4de9252b6c5c8f25fe07
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
-  ReactiveObjC: 7b6782ae39f9ac0f57205c3b0c0b69b9dd7048c0
+  ReactiveObjC: ce79989e8684b9086b5f8d0c74bc7b81a8729c9e
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
 PODFILE CHECKSUM: 14d621fafef136e547bfb7512c107b2dfe522746
