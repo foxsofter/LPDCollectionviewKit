@@ -1,6 +1,6 @@
 {
   "name": "LPDCollectionViewKit",
-  "version": "0.1.5",
+  "version": "0.1.8",
   "summary": "LPDCollectionViewKit, data driven collection view.",
   "description": "TODO: Add long description of the pod here.",
   "homepage": "https://github.com/foxsofter/lpd-collectionview-kit",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/foxsofter/lpd-collectionview-kit.git",
-    "tag": "0.1.5"
+    "tag": "0.1.8"
   },
   "platforms": {
     "ios": "8.0"

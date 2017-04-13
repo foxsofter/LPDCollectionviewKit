@@ -16,7 +16,7 @@ PODS:
     - AFNetworking/NSURLSession
   - Kiwi (2.4.0)
   - LPDAdditionsKit (0.1.2)
-  - LPDCollectionViewKit (0.1.5):
+  - LPDCollectionViewKit (0.1.8):
     - ReactiveObjC
   - LPDNetworkingKit (0.2.3):
     - AFNetworking
@@ -41,7 +41,7 @@ SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
   LPDAdditionsKit: 68234d5791daf8d4272ccd4c06eaf22ab09b2809
-  LPDCollectionViewKit: fc6ab7f03a2cd15215924087bff85e6f504beac6
+  LPDCollectionViewKit: 3dd9cef6c6066e2017d07a6985d9ee6f948d1f96
   LPDNetworkingKit: fdf98eb195924666be2ac5a60a7d83e832ecb23f
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   ReactiveObjC: 7b6782ae39f9ac0f57205c3b0c0b69b9dd7048c0
