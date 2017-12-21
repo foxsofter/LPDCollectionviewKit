@@ -20,104 +20,111 @@
 @implementation LPDCollectionView
 
 - (instancetype)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout {
-  self = [super initWithFrame:frame collectionViewLayout:layout];
-  if (self) {
-    self.backgroundColor = [UIColor colorWithRed:0.9214 green:0.9206 blue:0.9458 alpha:1.0];
-  }
-  return self;
+    self = [super initWithFrame:frame collectionViewLayout:layout];
+    if (self) {
+        self.backgroundColor = [UIColor colorWithRed:0.9214 green:0.9206 blue:0.9458 alpha:1.0];
+    }
+    return self;
 }
 
 - (void)bindingTo:(__kindof id<LPDCollectionViewModelProtocol>)viewModel {
-  NSParameterAssert(viewModel);
-
-  self.viewModel = viewModel;
-  LPDCollectionViewModel *collectionViewModel = self.viewModel;
-  super.delegate = collectionViewModel.delegate;
-  super.dataSource = collectionViewModel.dataSource;
-  
-
-  @weakify(self);  
-  [[[collectionViewModel.reloadDataSignal takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
-    deliverOnMainThread] subscribeNext:^(id x) {
+    NSParameterAssert(viewModel);
+    
+    self.viewModel = viewModel;
+    LPDCollectionViewModel *collectionViewModel = self.viewModel;
+    super.delegate = collectionViewModel.delegate;
+    super.dataSource = collectionViewModel.dataSource;
+    
+    
+    @weakify(self);
+    [[[collectionViewModel.reloadDataSignal takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
+      deliverOnMainThread] subscribeNext:^(id x) {
         @strongify(self);
         [self reloadData];
-      }];
-
-  [[[collectionViewModel.insertSectionsSignal takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
-   deliverOnMainThread] subscribeNext:^(NSIndexSet *indexSet) {
+    }];
+    
+    [[[collectionViewModel.scrollToItemAtIndexPathSignal takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
+      deliverOnMainThread] subscribeNext:^(RACTuple *tuple) {
+        @strongify(self);
+        [self scrollToItemAtIndexPath:tuple.first atScrollPosition:[tuple.second integerValue] animated:[tuple.third boolValue]];
+    }];
+    
+    [[[collectionViewModel.insertSectionsSignal takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
+      deliverOnMainThread] subscribeNext:^(NSIndexSet *indexSet) {
         @strongify(self);
         [self insertSections:indexSet];
-      }];
-
+    }];
+    
     [[[collectionViewModel.deleteSectionsSignal takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
       deliverOnMainThread] subscribeNext:^(NSIndexSet *indexSet) {
         @strongify(self);
         [self deleteSections:indexSet];
-      }];
-
+    }];
+    
     [[[collectionViewModel.replaceSectionsSignal takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
       deliverOnMainThread] subscribeNext:^(NSIndexSet *indexSet) {
         @strongify(self);
-      [self performBatchUpdates:^{
-        [self deleteSections:indexSet];
-        [self insertSections:indexSet];
-      } completion:nil];
-      }];
-
+        [self performBatchUpdates:^{
+            [self deleteSections:indexSet];
+            [self insertSections:indexSet];
+        } completion:nil];
+    }];
+    
     [[[collectionViewModel.reloadSectionsSignal takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
       deliverOnMainThread] subscribeNext:^(NSIndexSet *indexSet) {
         @strongify(self);
         [self reloadSections:indexSet];
-      }];
-
+    }];
+    
     [[[collectionViewModel.insertItemsAtIndexPathsSignal takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
       deliverOnMainThread] subscribeNext:^(RACTuple *tuple) {
-      @strongify(self);
-      if (tuple.second) {
-        [self performBatchUpdates:^{
-          [self insertSections:tuple.second];
-          [self insertItemsAtIndexPaths:tuple.first];
-        } completion:nil];
-      } else {
-        [self insertItemsAtIndexPaths:tuple.first];
-      }
+        @strongify(self);
+        if (tuple.second) {
+            [self performBatchUpdates:^{
+                [self insertSections:tuple.second];
+                [self insertItemsAtIndexPaths:tuple.first];
+            } completion:nil];
+        } else {
+            [self insertItemsAtIndexPaths:tuple.first];
+        }
     }];
-
+    
     [[[collectionViewModel.deleteItemsAtIndexPathsSignal
-      takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
+       takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
       deliverOnMainThread] subscribeNext:^(NSArray<NSIndexPath *> *indexPaths) {
         @strongify(self);
         [self deleteItemsAtIndexPaths:indexPaths];
-      }];
-
-  [[[collectionViewModel.reloadItemsAtIndexPathsSignal
-     takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
-    deliverOnMainThread] subscribeNext:^(NSArray<NSIndexPath *> *indexPaths) {
-    @strongify(self);
-    [self reloadItemsAtIndexPaths:indexPaths];
-  }];
-
-  [[[collectionViewModel.replaceItemsAtIndexPathsSignal
-    takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]] deliverOnMainThread] subscribeNext:^(RACTuple *tuple) {
-    @strongify(self);
-    [self performBatchUpdates:^{
-      if (tuple.third) {
-        [self insertSections:tuple.third];
-        [self insertItemsAtIndexPaths:tuple.second];
-      } else {
-        [self deleteItemsAtIndexPaths:tuple.first];
-        [self insertItemsAtIndexPaths:tuple.second];
-      }
-    } completion:nil];
-  }];
+    }];
+    
+    [[[collectionViewModel.reloadItemsAtIndexPathsSignal
+       takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]]
+      deliverOnMainThread] subscribeNext:^(NSArray<NSIndexPath *> *indexPaths) {
+        @strongify(self);
+        [self reloadItemsAtIndexPaths:indexPaths];
+    }];
+    
+    [[[collectionViewModel.replaceItemsAtIndexPathsSignal
+       takeUntil:[self rac_signalForSelector:@selector(removeFromSuperview)]] deliverOnMainThread] subscribeNext:^(RACTuple *tuple) {
+        @strongify(self);
+        [self performBatchUpdates:^{
+            if (tuple.third) {
+                [self insertSections:tuple.third];
+                [self insertItemsAtIndexPaths:tuple.second];
+            } else {
+                [self deleteItemsAtIndexPaths:tuple.first];
+                [self insertItemsAtIndexPaths:tuple.second];
+            }
+        } completion:nil];
+    }];
 }
 
 - (void)setDelegate:(id<UICollectionViewDelegate>)delegate {
-  [self.viewModel setScrollViewDelegate:delegate];
+    [self.viewModel setScrollViewDelegate:delegate];
 }
 
 - (void)setDataSource:(id<UICollectionViewDataSource>)dataSource {
-  // do nothing
+    // do nothing
 }
 
 @end
+

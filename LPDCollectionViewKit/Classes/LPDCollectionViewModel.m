@@ -44,6 +44,7 @@
 @property (nonatomic, strong) LPDCollectionViewFactory *collectionViewFactory;
 
 @property (nonatomic, strong) RACSubject *reloadDataSubject;
+@property (nonatomic, strong) RACSubject *scrollToItemAtIndexPathSubject;
 
 @property (nonatomic, strong) RACSubject *insertSectionsSubject;
 @property (nonatomic, strong) RACSubject *deleteSectionsSubject;
@@ -174,6 +175,25 @@ static NSString *const kDefaultFooterReuseIdentifier = @"kDefaultFooterReuseIden
     return sectionViewModel.footerViewModel;
   }
   return nil;
+}
+
+- (void)scrollToCollectionItemAtIndexPath:(NSIndexPath *)indexPath atScrollPosition:(UICollectionViewScrollPosition)scrollPosition animated:(BOOL)animated {
+    BOOL isHave = NO;
+    for (NSUInteger section=0; section < self.sections.count; section++) {
+        LPDCollectionSectionViewModel *sectionViewModel = self.sections[section];
+        for (NSUInteger row=0; row < sectionViewModel.mutableItems.count; row++) {
+            NSIndexPath *indexPathItem = [NSIndexPath indexPathForRow:row inSection:section];
+            if (indexPathItem == indexPath) {
+                isHave = YES;
+            }
+        }
+    }
+    if (isHave) {
+        [self.scrollToItemAtIndexPathSubject sendNext:RACTuplePack(indexPath,@(scrollPosition),@(animated))];
+    } else {
+        NSLog(@"scroll indexPath 超出范围!!");
+        return;
+    }
 }
 
 - (void)addCellViewModel:(__kindof id<LPDCollectionItemViewModelProtocol>)cellViewModel {
@@ -553,6 +573,10 @@ static NSString *const kDefaultFooterReuseIdentifier = @"kDefaultFooterReuseIden
 
 - (RACSignal *)reloadDataSignal {
   return _reloadDataSubject ?: (_reloadDataSubject = [[RACSubject subject] setNameWithFormat:@"reloadDataSignal"]);
+}
+                                                               
+- (RACSignal *)scrollToItemAtIndexPathSignal {
+   return _scrollToItemAtIndexPathSubject ?: (_scrollToItemAtIndexPathSubject = [[RACSubject subject] setNameWithFormat:@"scrollToItemAtIndexPathSignal"]);
 }
 
 - (RACSignal *)insertSectionsSignal {

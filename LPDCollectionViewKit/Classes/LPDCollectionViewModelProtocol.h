@@ -29,6 +29,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable __kindof id<LPDCollectionItemViewModelProtocol>)footerViewModelFromSection:(NSInteger)sectionIndex;
 
+#pragma mark - scrollToItem methods
+
+- (void)scrollToCollectionItemAtIndexPath:(NSIndexPath *)indexPath atScrollPosition:(UICollectionViewScrollPosition)scrollPosition animated:(BOOL)animated;
+
 #pragma mark - add cells methods
 
 /**

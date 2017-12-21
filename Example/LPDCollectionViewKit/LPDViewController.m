@@ -30,8 +30,10 @@
 
   UICollectionViewFlowLayout *collectionViewFlowLayout = [[UICollectionViewFlowLayout alloc] init];
   collectionViewFlowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-  collectionViewFlowLayout.itemSize = CGSizeMake((UIScreen.width - 30) / 2, (UIScreen.width - 30) / 2);
-  collectionViewFlowLayout.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
+  collectionViewFlowLayout.itemSize = CGSizeMake((UIScreen.width - 60) / 3 , (UIScreen.width - 60) / 3);
+  collectionViewFlowLayout.sectionInset = UIEdgeInsetsMake(1, 1, 1, 1);
+  collectionViewFlowLayout.minimumLineSpacing = 10;
+  collectionViewFlowLayout.minimumInteritemSpacing =10;
   collectionViewFlowLayout.headerReferenceSize = CGSizeMake(self.view.bounds.size.width, 30);
   collectionViewFlowLayout.footerReferenceSize = CGSizeMake(self.view.bounds.size.width, 1);
   
@@ -68,6 +70,9 @@
   
   UIBarButtonItem *insertSectionBarButtonItem =
   [[UIBarButtonItem alloc] initWithTitle:@"is" style:UIBarButtonItemStylePlain target:self action:@selector(insertSection)];
+    
+    UIBarButtonItem *scrollToItemAtIndexPathBarButtonItem =
+    [[UIBarButtonItem alloc] initWithTitle:@"scroll" style:UIBarButtonItemStylePlain target:self action:@selector(scrollToItem)];
 
   self.navigationController.toolbarHidden = NO;
   [self setToolbarItems:@[addCellBarButtonItem,
@@ -77,7 +82,8 @@
                           removeCellBarButtonItem,
                           removeCellsBarButtonItem,
                           replaceCellsBarButtonItem,
-                          insertSectionBarButtonItem,]
+                          insertSectionBarButtonItem,
+                          scrollToItemAtIndexPathBarButtonItem]
                animated:YES];
 
   @weakify(self);
@@ -207,6 +213,12 @@
   
   sectionViewModel.headerTitle = @"逗你玩";
   [self.collectionViewModel addSectionViewModel:sectionViewModel];
+}
+
+- (void)scrollToItem {
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:2 inSection:0];
+    [self.collectionViewModel scrollToCollectionItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
 }
 
 @end
