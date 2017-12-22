@@ -33,7 +33,7 @@
   collectionViewFlowLayout.itemSize = CGSizeMake((UIScreen.width - 60) / 3 , (UIScreen.width - 60) / 3);
   collectionViewFlowLayout.sectionInset = UIEdgeInsetsMake(1, 1, 1, 1);
   collectionViewFlowLayout.minimumLineSpacing = 10;
-  collectionViewFlowLayout.minimumInteritemSpacing =10;
+  collectionViewFlowLayout.minimumInteritemSpacing = 10;
   collectionViewFlowLayout.headerReferenceSize = CGSizeMake(self.view.bounds.size.width, 30);
   collectionViewFlowLayout.footerReferenceSize = CGSizeMake(self.view.bounds.size.width, 1);
   
@@ -216,8 +216,10 @@
 }
 
 - (void)scrollToItem {
-    
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:2 inSection:0];
+    NSArray *sections = self.collectionViewModel.collectionViewModelSections;
+    NSArray *items = [[sections objectAtIndex:sections.count-1] items];
+//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:items.count-1 inSection:sections.count-1];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:7 inSection:0];
     [self.collectionViewModel scrollToCollectionItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
 }
 

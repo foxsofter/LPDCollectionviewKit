@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LPDCollectionViewModel : NSObject <LPDCollectionViewModelProtocol>
 
+@property (readonly, nonatomic, getter = getSections) NSArray *collectionViewModelSections;
+
 + (instancetype) new NS_UNAVAILABLE;
 
 @end

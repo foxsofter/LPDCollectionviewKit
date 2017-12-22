@@ -77,6 +77,9 @@ static NSString *const kDefaultFooterReuseIdentifier = @"kDefaultFooterReuseIden
   id<UICollectionViewDataSource> _dataSource;
 }
 
+- (NSArray *)getSections {
+    return [NSArray arrayWithArray:_sections];
+}
 
 - (instancetype)init {
   if (self = [super init]) {
