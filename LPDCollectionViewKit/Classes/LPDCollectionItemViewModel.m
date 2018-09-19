@@ -9,34 +9,38 @@
 #import "LPDCollectionItemViewModel.h"
 #import "LPDCollectionViewModelProtocol.h"
 
-@implementation LPDCollectionItemViewModel {
-  NSString *_reuseIdentifier;
-  NSString *_reuseViewClass;
+@implementation LPDCollectionItemViewModel
+{
+    NSString *_reuseIdentifier;
+    NSString *_reuseViewClass;
 }
 @synthesize viewModel = _viewModel;
 
 #pragma mark - LPDCollectionItemViewModelProtocol
 
-- (instancetype)initWithViewModel:(__kindof id<LPDCollectionViewModelProtocol>)viewModel {
-  self = [super init];
-  if (self) {
-    _viewModel = viewModel;
-  }
-  return self;
+- (instancetype)initWithViewModel:(__kindof id<LPDCollectionViewModelProtocol>)viewModel
+{
+    self = [super init];
+    if (self) {
+        _viewModel = viewModel;
+    }
+    return self;
 }
 
-- (NSString *)reuseIdentifier {
-  return _reuseIdentifier ?: (_reuseIdentifier =
-                              [NSString stringWithFormat:@"reusable-%@-%@",
-                               [self reuseViewClass],
-                               NSStringFromClass(self.class)]);
+- (NSString *)reuseIdentifier
+{
+    return _reuseIdentifier ? : (_reuseIdentifier =
+                                     [NSString stringWithFormat:@"reusable-%@-%@",
+                                      [self reuseViewClass],
+                                      NSStringFromClass(self.class)]);
 }
 
-- (NSString *)reuseViewClass {
-  return _reuseViewClass ?: (_reuseViewClass =
-                             [[NSStringFromClass(self.class)
-                               stringByReplacingOccurrencesOfString:@"LPDCollection" withString:@"LPDCollectionView"]
-                              stringByReplacingOccurrencesOfString:@"ViewModel" withString:@""]);
+- (NSString *)reuseViewClass
+{
+    return _reuseViewClass ? : (_reuseViewClass =
+                                    [[NSStringFromClass(self.class)
+                                      stringByReplacingOccurrencesOfString:@"LPDCollection" withString:@"LPDCollectionView"]
+                                     stringByReplacingOccurrencesOfString:@"ViewModel" withString:@""]);
 }
 
 @end

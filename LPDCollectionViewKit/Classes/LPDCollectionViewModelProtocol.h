@@ -52,7 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param cellViewModels 同一个cellViewModel不可添加多次
  */
-- (void)addCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol>> *)cellViewModels;
+- (void)addCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol> > *)cellViewModels;
 
 /**
  *  @brief 添加cellViewModels到最后一个section，如果不存在section默认添加一个section
@@ -60,7 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param cellViewModels 同一个cellViewModel不可添加多次
  *  @param sectionIndex   sectionIndex
  */
-- (void)addCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol>> *)cellViewModels
+- (void)addCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol> > *)cellViewModels
                 toSection:(NSUInteger)sectionIndex;
 
 #pragma mark - insert cells methods
@@ -90,7 +90,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param cellViewModels 同一个cellViewModel不可添加多次
  *  @param index          index
  */
-- (void)insertCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol>> *)cellViewModels
+- (void)insertCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol> > *)cellViewModels
                      atIndex:(NSUInteger)index;
 
 /**
@@ -100,7 +100,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param index          index
  *  @param sectionIndex   sectionIndex
  */
-- (void)insertCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol>> *)cellViewModels
+- (void)insertCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol> > *)cellViewModels
                      atIndex:(NSUInteger)index
                    inSection:(NSUInteger)sectionIndex;
 
@@ -153,7 +153,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param cellViewModels 同一个cellViewModel不可添加多次
  *  @param index          index
  */
-- (void)replaceCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol>> *)cellViewModels
+- (void)replaceCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol> > *)cellViewModels
                     fromIndex:(NSUInteger)index;
 
 /**
@@ -163,7 +163,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param index          index
  *  @param sectionIndex   sectionIndex
  */
-- (void)replaceCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol>> *)cellViewModels
+- (void)replaceCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol> > *)cellViewModels
                     fromIndex:(NSUInteger)index
                     inSection:(NSUInteger)sectionIndex;
 
@@ -183,7 +183,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param cellViewModels   同一个cellViewModel不可添加多次
  */
 - (void)addSectionViewModel:(id<LPDCollectionSectionViewModelProtocol>)sectionViewModel
-         withCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol>> *)cellViewModels;
+         withCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol> > *)cellViewModels;
 
 #pragma mark - insert section methods
 
@@ -203,7 +203,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param index            index
  */
 - (void)insertSectionViewModel:(id<LPDCollectionSectionViewModelProtocol>)sectionViewModel
-            withCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol>> *)cellViewModels
+            withCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol> > *)cellViewModels
                        atIndex:(NSUInteger)index;
 
 #pragma mark - reload sections methods
@@ -244,7 +244,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param cellViewModels 同一个cellViewModel不可添加多次
  */
-- (void)replaceSectionWithCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol>> *)cellViewModels;
+- (void)replaceSectionWithCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol> > *)cellViewModels;
 
 /**
  *  @brief 重置指定的section，替换该section下所有的cellViewModel
@@ -252,9 +252,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param cellViewModels 同一个cellViewModel不可添加多次
  *  @param sectionIndex   sectionIndex
  */
-- (void)replaceSectionWithCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol>> *)cellViewModels
+- (void)replaceSectionWithCellViewModels:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol> > *)cellViewModels
                                atSection:(NSUInteger)sectionIndex;
-
 
 #pragma mark - action signals
 

@@ -12,6 +12,6 @@
 
 @interface LPDCollectionSectionViewModel ()
 
-@property (nonatomic, strong) NSMutableArray<__kindof id<LPDCollectionItemViewModelProtocol>> *mutableItems;
+@property (nonatomic, strong) NSMutableArray<__kindof id<LPDCollectionItemViewModelProtocol> > *mutableItems;
 
 @end

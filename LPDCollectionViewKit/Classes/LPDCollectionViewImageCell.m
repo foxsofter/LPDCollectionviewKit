@@ -12,32 +12,36 @@
 
 @implementation LPDCollectionViewImageCell
 
-- (instancetype)initWithFrame:(CGRect)frame {
-  self = [super initWithFrame:frame];
-  if (self) {
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self loadSubviews];
+    }
+    return self;
+}
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+
     [self loadSubviews];
-  }
-  return self;
 }
 
-- (void)awakeFromNib {
-  [super awakeFromNib];
-  
-  [self loadSubviews];
+- (void)loadSubviews
+{
+    self.backgroundColor = [UIColor clearColor];
+    _imageView = [[UIImageView alloc] init];
+    [self.contentView addSubview:_imageView];
+    _imageView.frame = self.contentView.bounds;
 }
 
-- (void)loadSubviews {
-  self.backgroundColor = [UIColor clearColor];
-  _imageView = [[UIImageView alloc] init];
-  [self.contentView addSubview:_imageView];
-  _imageView.frame = self.contentView.bounds;
-}
+- (void)bindingTo:(__kindof id<LPDCollectionItemViewModelProtocol>)viewModel
+{
+    [super bindingTo:viewModel];
 
-- (void)bindingTo:(__kindof id<LPDCollectionItemViewModelProtocol>)viewModel {
-  [super bindingTo:viewModel];
-
-  LPDCollectionImageCellViewModel *cellViewModel = viewModel;
-  RAC(self.imageView, image) = RACObserve(cellViewModel, image);
+    LPDCollectionImageCellViewModel *cellViewModel = viewModel;
+    RAC(self.imageView, image) = RACObserve(cellViewModel, image);
 }
 
 @end

@@ -13,7 +13,7 @@
 @protocol LPDCollectionSectionViewModelProtocol <NSObject>
 @required
 
-@property (nonatomic, copy) NSArray<__kindof id<LPDCollectionItemViewModelProtocol>> *items;
+@property (nonatomic, copy) NSArray<__kindof id<LPDCollectionItemViewModelProtocol> > *items;
 
 @optional
 

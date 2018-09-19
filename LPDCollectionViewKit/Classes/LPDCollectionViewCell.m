@@ -18,10 +18,11 @@
 
 @implementation LPDCollectionViewCell
 
-- (void)bindingTo:(__kindof id<LPDCollectionItemViewModelProtocol>)viewModel {
-  NSParameterAssert(viewModel);
+- (void)bindingTo:(__kindof id<LPDCollectionItemViewModelProtocol>)viewModel
+{
+    NSParameterAssert(viewModel);
 
-  self.viewModel = viewModel;
+    self.viewModel = viewModel;
 }
 
 @end

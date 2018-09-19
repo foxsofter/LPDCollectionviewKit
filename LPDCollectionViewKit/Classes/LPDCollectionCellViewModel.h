@@ -9,6 +9,6 @@
 #import "LPDCollectionItemViewModel.h"
 
 @interface LPDCollectionCellViewModel : LPDCollectionItemViewModel
-+ (instancetype) new NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
 @end

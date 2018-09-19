@@ -11,29 +11,32 @@
 
 @implementation LPDCollectionSectionViewModel
 
-+ (instancetype)section {
-  return [[self alloc] init];
++ (instancetype)section
+{
+    return [[self alloc] init];
 }
 
-- (NSMutableArray<__kindof id<LPDCollectionItemViewModelProtocol>> *)mutableItems {
-
-  return _mutableItems ?: (_mutableItems = [NSMutableArray array]);
+- (NSMutableArray<__kindof id<LPDCollectionItemViewModelProtocol> > *)mutableItems
+{
+    return _mutableItems ? : (_mutableItems = [NSMutableArray array]);
 }
 
-- (NSArray<__kindof id<LPDCollectionItemViewModelProtocol>> *)items {
-  return [_mutableItems copy];
+- (NSArray<__kindof id<LPDCollectionItemViewModelProtocol> > *)items
+{
+    return [_mutableItems copy];
 }
 
-- (void)setItems:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol>> *)items {
-  if (items) {
-    if ([items isKindOfClass:[NSMutableArray class]]) {
-      _mutableItems = (NSMutableArray *)items;
+- (void)setItems:(NSArray<__kindof id<LPDCollectionItemViewModelProtocol> > *)items
+{
+    if (items) {
+        if ([items isKindOfClass:[NSMutableArray class]]) {
+            _mutableItems = (NSMutableArray *)items;
+        } else {
+            _mutableItems = [items mutableCopy];
+        }
     } else {
-      _mutableItems = [items mutableCopy];
+        _mutableItems = [NSMutableArray array];
     }
-  } else {
-    _mutableItems = [NSMutableArray array];
-  }
 }
 
 @end
